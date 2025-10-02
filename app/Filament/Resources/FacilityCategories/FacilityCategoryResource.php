@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Filament\Resources\RoomTypes;
+namespace App\Filament\Resources\FacilityCategories;
 
-use App\Filament\Resources\RoomTypes\Pages\CreateRoomType;
-use App\Filament\Resources\RoomTypes\Pages\EditRoomType;
-use App\Filament\Resources\RoomTypes\Pages\ListRoomTypes;
-use App\Filament\Resources\RoomTypes\Schemas\RoomTypeForm;
-use App\Filament\Resources\RoomTypes\Tables\RoomTypesTable;
-use App\Models\RoomType;
+use App\Filament\Resources\FacilityCategories\Pages\CreateFacilityCategory;
+use App\Filament\Resources\FacilityCategories\Pages\EditFacilityCategory;
+use App\Filament\Resources\FacilityCategories\Pages\ListFacilityCategories;
+use App\Models\FacilityCategory;
 use BackedEnum;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -19,15 +17,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
 
-class RoomTypeResource extends Resource
+class FacilityCategoryResource extends Resource
 {
-    protected static ?string $model = RoomType::class;
+    protected static ?string $model = FacilityCategory::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static string | UnitEnum | null $navigationGroup = 'Facilities';
-
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Facilities';
 
     public static function form(Schema $schema): Schema
     {
@@ -58,16 +56,16 @@ class RoomTypeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\FacilitiesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListRoomTypes::route('/'),
-            'create' => CreateRoomType::route('/create'),
-            'edit' => EditRoomType::route('/{record}/edit'),
+            'index' => ListFacilityCategories::route('/'),
+            'create' => CreateFacilityCategory::route('/create'),
+            'edit' => EditFacilityCategory::route('/{record}/edit'),
         ];
     }
 }

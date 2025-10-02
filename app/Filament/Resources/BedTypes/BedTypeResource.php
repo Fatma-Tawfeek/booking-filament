@@ -9,10 +9,15 @@ use App\Filament\Resources\BedTypes\Schemas\BedTypeForm;
 use App\Filament\Resources\BedTypes\Tables\BedTypesTable;
 use App\Models\BedType;
 use BackedEnum;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class BedTypeResource extends Resource
 {
@@ -20,16 +25,34 @@ class BedTypeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static string | UnitEnum | null $navigationGroup = 'Facilities';
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
-        return BedTypeForm::configure($schema);
+        return $schema
+            ->schema([
+                TextInput::make('name')
+                    ->required(),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
-        return BedTypesTable::configure($table);
+        return $table
+            ->columns([
+                TextColumn::make('name'),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getRelations(): array
