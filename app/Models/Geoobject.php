@@ -10,4 +10,10 @@ class Geoobject extends Model
     use HasFactory;
 
     protected $fillable = ['city_id', 'name', 'lat', 'long'];
+
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
