@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Property extends Model
+class Property extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'owner_id',
         'name',
@@ -24,5 +28,10 @@ class Property extends Model
     public function apartments()
     {
         return $this->hasMany(Apartment::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }
